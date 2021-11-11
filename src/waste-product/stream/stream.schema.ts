@@ -1,21 +1,3 @@
-// import { Schema, Types } from 'mongoose';
-// import { ContainerModelName } from '../container/container.schema';
-// import { ServiceProviderModelName } from '../../service-provider/service-provider.schema';
-
-// export const StreamModelName = 'Stream';
-//
-// export const StreamSchema = new Schema({
-//   name: String,
-//   description: String,
-//   unitWeight: Number,
-//   type: String,
-//   sizes: [{ type: Types.ObjectId, ref: ContainerModelName }],
-//   serviceProviders: [{ type: Types.ObjectId, ref: ServiceProviderModelName }],
-//   zipCodes: [Number],
-//   days: [{ day: Number, timeslots: [String] }],
-//   isActive: { type: Boolean, default: true },
-// });
-
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Container } from '../container/container.schema';
