@@ -1,12 +1,3 @@
-// import { Schema } from 'mongoose';
-//
-// export const ServiceProviderModelName = 'ServiceProvider';
-//
-// export const ServiceProviderSchema = new Schema({
-//   name: String,
-//   isActive: { type: Boolean, default: true },
-// });
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
