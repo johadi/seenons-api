@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,7 +9,8 @@ import { ServiceProviderModule } from './service-provider/service-provider.modul
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1/seenons'),
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     WasteProductModule,
     ServiceProviderModule,
   ],
