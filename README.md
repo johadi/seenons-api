@@ -39,7 +39,7 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## DevOPS Section
+## DevOps Section
 See [DevOps section](devops-section.md)
 
 ## Author
