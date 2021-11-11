@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ServiceProviderService } from './service-provider.service';
 import { CreateServiceProviderDto } from './dto/create-service-provider.dto';
 import { UpdateServiceProviderDto } from './dto/update-service-provider.dto';
+import { ParseMongoIdPipe } from '../pipes/parse-mongo-id.pipe';
 
 @Controller('service-provider')
 export class ServiceProviderController {
-  constructor(private readonly serviceProviderService: ServiceProviderService) {}
+  constructor(
+    private readonly serviceProviderService: ServiceProviderService,
+  ) {}
 
   @Post()
-  create(@Body() createServiceProviderDto: CreateServiceProviderDto) {
-    return this.serviceProviderService.create(createServiceProviderDto);
+  createServiceProvider(
+    @Body() createServiceProviderDto: CreateServiceProviderDto,
+  ) {
+    return this.serviceProviderService.createServiceProvider(
+      createServiceProviderDto,
+    );
   }
 
   @Get()
-  findAll() {
-    return this.serviceProviderService.findAll();
+  getServiceProviders() {
+    return this.serviceProviderService.getServiceProviders();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.serviceProviderService.findOne(+id);
+  @Get(':serviceProviderId')
+  getServiceProvider(
+    @Param('serviceProviderId', ParseMongoIdPipe) serviceProviderId: string,
+  ) {
+    return this.serviceProviderService.getServiceProvider(serviceProviderId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateServiceProviderDto: UpdateServiceProviderDto) {
-    return this.serviceProviderService.update(+id, updateServiceProviderDto);
+  @Patch(':serviceProviderId')
+  updateServiceProvider(
+    @Param('serviceProviderId', ParseMongoIdPipe) serviceProviderId: string,
+    @Body() updateServiceProviderDto: UpdateServiceProviderDto,
+  ) {
+    return this.serviceProviderService.updateServiceProvider(
+      serviceProviderId,
+      updateServiceProviderDto,
+    );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.serviceProviderService.remove(+id);
+  @Delete(':serviceProviderId')
+  deleteServiceProvider(
+    @Param('serviceProviderId', ParseMongoIdPipe) serviceProviderId: string,
+  ) {
+    return this.serviceProviderService.deleteServiceProvider(serviceProviderId);
   }
 }

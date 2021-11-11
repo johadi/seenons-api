@@ -4,16 +4,17 @@ import { ServiceProviderController } from './service-provider.controller';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import {
-  ServiceProviderModelName,
+  ServiceProvider,
   ServiceProviderSchema,
 } from './service-provider.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: ServiceProviderModelName, schema: ServiceProviderSchema },
+      { name: ServiceProvider.name, schema: ServiceProviderSchema },
     ]),
   ],
+  exports: [MongooseModule],
   controllers: [ServiceProviderController],
   providers: [ServiceProviderService],
 })
