@@ -1,6 +1,6 @@
 import { IsInt } from 'class-validator';
 
-export class AddZipcodeDto {
+export class AddPostalCodeDto {
   @IsInt()
-  zipCode: number;
+  postalCode: number;
 }

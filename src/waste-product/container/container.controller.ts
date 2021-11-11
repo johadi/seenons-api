@@ -1,34 +1,49 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ContainerService } from './container.service';
 import { CreateContainerDto } from './dto/create-container.dto';
 import { UpdateContainerDto } from './dto/update-container.dto';
+import { ParseMongoIdPipe } from '../../pipes/parse-mongo-id.pipe';
 
-@Controller('container')
+@Controller('containers')
 export class ContainerController {
   constructor(private readonly containerService: ContainerService) {}
 
   @Post()
-  create(@Body() createContainerDto: CreateContainerDto) {
-    return this.containerService.create(createContainerDto);
+  createContainer(@Body() createContainerDto: CreateContainerDto) {
+    return this.containerService.createContainer(createContainerDto);
   }
 
   @Get()
-  findAll() {
-    return this.containerService.findAll();
+  getContainers() {
+    return this.containerService.getContainers();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.containerService.findOne(+id);
+  @Get(':containerId')
+  getContainer(@Param('containerId', ParseMongoIdPipe) containerId: string) {
+    return this.containerService.getContainer(containerId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateContainerDto: UpdateContainerDto) {
-    return this.containerService.update(+id, updateContainerDto);
+  @Patch(':containerId')
+  updateContainer(
+    @Param('containerId', ParseMongoIdPipe) containerId: string,
+    @Body() updateContainerDto: UpdateContainerDto,
+  ) {
+    return this.containerService.updateContainer(
+      containerId,
+      updateContainerDto,
+    );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.containerService.remove(+id);
+  @Delete(':containerId')
+  deleteContainer(@Param('containerId', ParseMongoIdPipe) containerId: string) {
+    return this.containerService.deleteContainer(containerId);
   }
 }

@@ -1,21 +1,20 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { StreamModelName, StreamSchema } from './stream/stream.schema';
-import {
-  ContainerModelName,
-  ContainerSchema,
-} from './container/container.schema';
+import { StreamSchema, Stream } from './stream/stream.schema';
+import { ContainerSchema, Container } from './container/container.schema';
 import { ContainerController } from './container/container.controller';
 import { ContainerService } from './container/container.service';
 import { StreamController } from './stream/stream.controller';
 import { StreamService } from './stream/stream.service';
+import { ServiceProviderModule } from '../service-provider/service-provider.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: StreamModelName, schema: StreamSchema },
-      { name: ContainerModelName, schema: ContainerSchema },
+      { name: Stream.name, schema: StreamSchema },
+      { name: Container.name, schema: ContainerSchema },
     ]),
+    ServiceProviderModule,
   ],
   controllers: [ContainerController, StreamController],
   providers: [ContainerService, StreamService],

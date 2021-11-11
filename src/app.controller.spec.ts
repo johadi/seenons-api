@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-describe('AppController', () => {
+fdescribe('AppController', () => {
   let appController: AppController;
 
   beforeEach(async () => {
@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return a welcome message', () => {
+      expect(appController.getWelcomeMessage()).toBe('Welcome to Seenons API!');
     });
   });
 });

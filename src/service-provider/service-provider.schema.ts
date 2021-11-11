@@ -1,8 +1,25 @@
-import { Schema } from 'mongoose';
+// import { Schema } from 'mongoose';
+//
+// export const ServiceProviderModelName = 'ServiceProvider';
+//
+// export const ServiceProviderSchema = new Schema({
+//   name: String,
+//   isActive: { type: Boolean, default: true },
+// });
 
-export const ServiceProviderModelName = 'ServiceProvider';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export const ServiceProviderSchema = new Schema({
-  name: String,
-  isActive: { type: Boolean, default: true },
-});
+export type ServiceProviderDocument = ServiceProvider & Document;
+
+@Schema()
+export class ServiceProvider {
+  @Prop()
+  name: string;
+
+  @Prop({ default: true })
+  isActive: boolean;
+}
+
+export const ServiceProviderSchema =
+  SchemaFactory.createForClass(ServiceProvider);
