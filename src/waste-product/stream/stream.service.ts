@@ -127,10 +127,10 @@ export class StreamService {
     streamId: string,
     addDayDto: AddDayDto,
   ): Promise<Stream> {
-    return this.updateStreamField(streamId, 'availableDays', addDayDto);
+    return this.updateStreamField(streamId, 'availableDays', addDayDto, 'day');
   }
 
-  private async checkExistingStreamByName(name) {
+  private async checkExistingStreamByName(name: string) {
     const existingStream = await this.streamModel.findOne({ name });
 
     if (existingStream) {
@@ -141,14 +141,46 @@ export class StreamService {
     }
   }
 
-  private async updateStreamField(
+  private async updateStreamField<T, K extends keyof T>(
     streamId: string,
     field: string,
-    newValue: unknown,
+    newValue: T,
+    objectComparisonKey?: K,
   ) {
     const stream = await this.getStream(streamId);
 
+    // Check if value exists before updating
+    this.checkIfValueExists(stream[field], newValue, objectComparisonKey);
+
     stream[field].push(newValue);
     return stream.save();
+  }
+
+  // Check if a value exist in an array
+  private checkIfValueExists<T, K extends keyof T>(
+    values: T[],
+    newValue: T,
+    objectComparisonKey?: K,
+  ) {
+    let hasExistingValue: boolean;
+    let errorMessage: string;
+
+    // In case the value is an object
+    if (typeof newValue === 'object' && objectComparisonKey) {
+      hasExistingValue = values.some((existingValue) => {
+        return (
+          existingValue[objectComparisonKey] === newValue[objectComparisonKey]
+        );
+      });
+      errorMessage = `You can\'t add ${newValue[objectComparisonKey]} because it was already added.`;
+    } else {
+      // otherwise
+      hasExistingValue = values.includes(newValue);
+      errorMessage = ` You can\'t add ${newValue} because it was already added.`;
+    }
+
+    if (hasExistingValue) {
+      throw new HttpException(errorMessage, HttpStatus.CONFLICT);
+    }
   }
 }
