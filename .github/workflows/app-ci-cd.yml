@@ -41,7 +41,7 @@ jobs:
 
       # Deploy the app to heroku
       - name: Deploy app to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12 # action for heroku deploy
+        uses: akhileshns/heroku-deploy@v3.12.12 # action for heroku deployment
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "jim-seenons-api" # Must be unique in Heroku
