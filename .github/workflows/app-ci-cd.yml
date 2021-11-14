@@ -31,9 +31,13 @@ jobs:
       - name: Install project dependencies
         run: npm install
 
-      # Runs tests
-      - name: Run tests
+      # Runs unit tests
+      - name: Runs unit tests
         run: npm test
+
+      # Runs e2e tests
+      - name: Runs e2e tests
+        run: npm run test:e2e
 
       # Deploy the app to heroku
       - name: Deploy app to Heroku
